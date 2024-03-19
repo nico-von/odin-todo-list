@@ -1,43 +1,16 @@
+import createUID from "./uid";
+
 export class Item{
-    constructor(name, description, project, priority, date){
+    constructor(name, description, priority, date, projects){
         this.name = name;
         this.description = description;
-        this.project = project;
         this.priority = priority;
         this.date = date;
         this.isCompleted = false;
+        this.id = createUID("item");
     };
-
-    get name(){
-        return this.name;
-    }
-
-    set name(value){
-        this.name = value;
-    }
     
-    get description(){
-        return this.description;
+    toggleCompleted() {
+        this.isCompleted = !this.isCompleted;
     }
-    
-    set description(value){
-        this.description = value;
-    }
-    
-    get project(){
-        return this.project;
-    }
-    
-    set project(value){
-        this.project = value;
-    }
-}
-
-export function editItem(item, field, newValue) {
-    if ( item.hasOwnProperty(field) && (typeof item[field] !== typeof newValue) && (item[field])) {
-        return;
-    }
-
-    item[field] = newValue;
-    return item;
 }

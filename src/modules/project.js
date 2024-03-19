@@ -1,16 +1,9 @@
-export function  createProject (name, description, id) {
-    if (!id){
-        return
-    }
-    
-    return { name, description, id};
-}
+import createUID from "./uid"
 
-export function editProject (project, field, value) {
-    if( project.hasOwnProperty(field) && (typeof project[field] !== typeof value) && project[field]) {
-        return
+export class Project{
+    constructor(name, id, description) {
+        this.name = name;
+        this.id = createUID("project");
+        this.description = description;
     }
-    
-    project[field] == value;
-    return project;
 }

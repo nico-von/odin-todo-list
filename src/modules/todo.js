@@ -1,34 +1,42 @@
 import { Item } from "./item";
 import { Project } from "./project";
 
-export const itemsCache = {
-    items: {},
-    addItemToList(itemId, item){
+export function createItemCache(){
+    let items = {};
+    function addItemToList(item){
        if (Object.getPrototypeOf(item) !== Item.prototype){
         return;
        }
-       this.items[itemId] = item;
-    },
-    removeItemFromList(itemId){
-        delete this.items[itemId];
+       items[item.id] = item;
+    };
+    function removeItemFromList(itemId){
+        delete items[itemId];
+    };
+    return {
+        addItemToList,
+        removeItemFromList
     }
 }
 
-export const projectsCache = {
-    projects: {},
-    addProjectToList(projectId, project){
+export function createProjectCache(){
+    let projects = {};
+    function addProjectToList(project){
         if (Object.getPrototypeOf(project) !== Project.prototype) {
             return;
         }
-        this.projects[projectId] = project;
-    },
-    removeProjectFromList(projectId){
-        delete this.projects[projectId];
+        projects[project.id] = project;
+    };
+    function removeProjectFromList(projectId){
+        projects[projectId];
+    }
+    return {
+        addProjectToList,
+        removeProjectFromList
     }
 }
 
 export function createProjectMap(){
-    const projects = {}
+    let projects = {};
     function addProjectToList(projectId){
         if (projects.hasOwnProperty(projectId)){
             return;
@@ -47,10 +55,14 @@ export function createProjectMap(){
     function getProjects(){
         return projects;
     }
+    function loadProjectMap(projectObject){
+        projects = projectObject;
+    }
     return {
         addProjectToList,
         removeProjectFromList,
         addItemToProject,
-        getProjects
+        getProjects,
+        loadProjectMap
     }
 }

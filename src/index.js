@@ -2,6 +2,8 @@ import './style.css';
 import {createItemCache, createProjectCache, createProjectMap} from './modules/objects/todo.js';
 import { Item } from './modules/objects/item.js';
 import { Project } from './modules/objects/project.js';
+import { sidebarContainer } from './modules/objects/dom/containers.js';
+import { mainContainer } from './modules/objects/dom/containers.js';
 
 const itemsCache = createItemCache();
 const projectsCache = createProjectCache();

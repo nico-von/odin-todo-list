@@ -1,7 +1,7 @@
 import './style.css';
-import {createItemCache, createProjectCache, createProjectMap} from './modules/todo.js';
-import { Item } from './modules/item.js';
-import { Project } from './modules/project.js';
+import {createItemCache, createProjectCache, createProjectMap} from './modules/objects/todo.js';
+import { Item } from './modules/objects/item.js';
+import { Project } from './modules/objects/project.js';
 
 const itemsCache = createItemCache();
 const projectsCache = createProjectCache();

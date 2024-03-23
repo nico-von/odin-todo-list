@@ -25,6 +25,7 @@ module.exports = {
             title: 'Odin Todo List',
             filename: 'index.html',
             inject: 'body',
+            template: './src/index.html'
         })
     ],
 }

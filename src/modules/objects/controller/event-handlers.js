@@ -9,10 +9,11 @@ export function todoCardClickHandler(e) {
     }
 }
 
-export function todoCardReturnHandler(e) {
+export function todoCardFocusOutHandler(e) {
     e.preventDefault;
     e.stopPropagation;
     if (e.target.tagName === "INPUT") {
         commitTodoCardText(e.target);
+
     }
 }

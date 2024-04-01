@@ -1,0 +1,17 @@
+{
+    "items": [
+        {
+            "name": "Fetch the dog.",
+            "description": "The dog needs fetching",
+            "priority": 0,
+            "date": 1711965476,
+            "isCompleted": false
+        }
+    ],
+    "projects": [
+        {
+            "name": "Sample Project",
+            "description": "Sample purposes only"
+        }
+    ]
+}

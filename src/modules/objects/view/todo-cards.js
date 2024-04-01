@@ -1,4 +1,4 @@
-import { createElem, getElem } from "./elements";
+import { createElem } from "./elements";
 import {sideBarContainer, mainContainer} from "./containers";
 
 const EDIT_BUTTON_LBL = "Edit";

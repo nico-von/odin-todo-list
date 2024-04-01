@@ -12,11 +12,6 @@ export function createElem(elem = "div", classNames = [], parentElem = null, nam
     return newElem;
 }
 
-export function getElem(id=""){
-    const elem = document.querySelector(`#${id}`);
-    return elem;
-}
-
 export function resetElement(elem) {
     elem.className = "";
     elem.replaceChildren();

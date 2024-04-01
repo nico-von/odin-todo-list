@@ -1,4 +1,4 @@
-import createUID from "./uid";
+import createUID from "../../helpers/uid";
 
 export class Item{
     constructor(name, description, priority, date ){

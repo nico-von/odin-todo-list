@@ -1,4 +1,4 @@
-import createUID from "./uid"
+import createUID from "../../helpers/uid"
 
 export class Project{
     constructor(name, description) {

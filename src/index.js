@@ -1,8 +1,8 @@
 import './style.css';
-import {createItemCache, createProjectCache, createProjectMap} from './modules/objects/todo.js';
-import { Item } from './modules/objects/item.js';
-import { Project } from './modules/objects/project.js';
-import { createTodoCard} from './modules/objects/dom/todo-cards.js';
+import {createItemCache, createProjectCache, createProjectMap} from './modules/objects/model/todo.js';
+import { Item } from './modules/objects/model/item.js';
+import { Project } from './modules/objects/model/project.js';
+import { createTodoCard} from './modules/objects/view/todo-cards.js';
 
 const itemsCache = createItemCache();
 const projectsCache = createProjectCache();
@@ -18,4 +18,3 @@ itemsCache.addItemToList(itemTestB);
 projectsCache.addProjectToList(projectTest);
 
 projectMap.addItemToProject(projectTest.id, itemTestA.id);
-createTodoCard(itemTestA.name, itemTestA.description)

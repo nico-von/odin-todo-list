@@ -6,6 +6,13 @@
             "priority": 0,
             "date": 1711965476,
             "isCompleted": false
+        },
+        {
+            "name": "Get CPR",
+            "description": "The Chumbie needs CPR",
+            "priority": 1,
+            "date": 1711983724,
+            "isCompleted": false
         }
     ],
     "projects": [

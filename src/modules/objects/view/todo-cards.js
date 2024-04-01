@@ -5,8 +5,8 @@ const DELETE_BUTTON_LBL = "Delete";
 const TITLE_CLASS_NAME = "todo-title";
 const TITLE_DESC_NAME = "todo-desc";
 
-export function createTodoCard(name = "", description = "", isCompleted = false, priority, date) {
-    let todoElem = createElem("div", ["todo-card"]);
+export function createTodoCard(name = "", description = "", isCompleted = false, priority, date, container) {
+    let todoElem = createElem("div", ["todo-card"], container);
     let todoTitle = createElem("h3", [`${TITLE_CLASS_NAME}`], todoElem);
     let todoDesc = createElem("p", [`${TITLE_DESC_NAME}`], todoElem);
 

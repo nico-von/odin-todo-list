@@ -12,8 +12,12 @@ export function createItemCache() {
     function removeItemFromList(itemId) {
         delete items[itemId];
     };
+    function getItem(itemId){
+        return items[itemId];
+    }
     return {
         addItemToList,
+        getItem,
         removeItemFromList
     }
 }
@@ -52,6 +56,9 @@ export function createProjectMap() {
         }
         projects[projectId].push(itemId);
     }
+    function getProject(projectId){
+        return projects[projectId];
+    }
     function getProjects() {
         return projects;
     }
@@ -63,6 +70,7 @@ export function createProjectMap() {
         removeProjectFromMap,
         addItemToProject,
         getProjects,
+        getProject,
         loadProjectMap
     }
 }

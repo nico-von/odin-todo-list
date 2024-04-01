@@ -12,13 +12,15 @@ export function createElem(elem = "div", classNames = [], parentElem = null, nam
     return newElem;
 }
 
-export function resetElement(elem) {
-    elem.className = "";
+export function resetElement(elem, keepClass = false) {
+    if (!keepClass) {
+        elem.className = "";
+    }
     elem.replaceChildren();
 }
 
-export function renderElem(container, children){
-    if (Array.isArray(children)){
+export function renderElem(container, children) {
+    if (Array.isArray(children)) {
         container.append(...children);
     } else {
         container.appendChild(children)

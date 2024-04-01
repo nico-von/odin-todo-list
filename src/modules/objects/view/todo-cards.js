@@ -1,15 +1,12 @@
-import { createElem } from "./elements";
+import { createElem, resetElement } from "./elements";
 
 const EDIT_BUTTON_LBL = "Edit";
 const DELETE_BUTTON_LBL = "Delete";
-const TITLE_CLASS_NAME = "todo-title";
-const TITLE_DESC_NAME = "todo-desc";
 
 export function createTodoCard(name = "", description = "", isCompleted = false, priority, date, container) {
     let todoElem = createElem("div", ["todo-card"], container);
-    let todoTitle = createElem("h3", [`${TITLE_CLASS_NAME}`], todoElem);
-    let todoDesc = createElem("p", [`${TITLE_DESC_NAME}`], todoElem);
-
+    let todoTitle = createElem("div", ["todo-title"], todoElem);
+    let todoDesc = createElem("div", ["todo-desc"], todoElem);
     todoTitle.textContent = name;
     todoDesc.textContent = description;
 
@@ -23,10 +20,21 @@ export function createTodoCard(name = "", description = "", isCompleted = false,
     return todoElem;
 }
 
-export function editTodoCard(todoElem, name = "", description = "", isCompleted, priority, date) {
-    let todoTitle = todoElem.querySelector(`.${TITLE_CLASS_NAME}`);
-    let todoDesc = todoElem.querySelector(`.${TITLE_DESC_NAME}`);
+export function editTodoCardText(todoElem) {
+    let todoElemText = todoElem.textContent;
+    
+    resetElement(todoElem, true);
+    
+    let todoTitleInput = createElem("input", [], todoElem);
+    todoTitleInput.setAttribute("type", "text");
+    todoTitleInput.setAttribute("value", todoElemText);
+    todoTitleInput.focus();
+}
 
-    todoTitle.textContent = name;
-    todoDesc.textContent = description;
+export function commitTodoCardText(todoElem) {
+    let todoElemParent = todoElem.parentElement;
+    let todoElemText = todoElem.value;
+    resetElement(todoElemParent, true);
+    todoElemParent.textContent = todoElemText;
+
 }

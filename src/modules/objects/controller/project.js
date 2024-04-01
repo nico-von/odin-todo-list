@@ -1,5 +1,5 @@
 import { createTodoCard } from "../view/todo-cards";
-import { todoCardHandler } from "./event-handlers";
+import { todoCardClickHandler, todoCardReturnHandler } from "./event-handlers";
 
 export function createProjectController(container, projectMap, itemsCache, projectsCache) {
     function render(projectId = "default") {
@@ -18,7 +18,8 @@ export function createProjectController(container, projectMap, itemsCache, proje
                 item.priority,
                 item.date,
                 container)
-            todoCard.addEventListener('click', todoCardHandler)
+            todoCard.addEventListener('dblclick', todoCardClickHandler);
+            todoCard.addEventListener('focusout', todoCardReturnHandler);
         }
     }
 

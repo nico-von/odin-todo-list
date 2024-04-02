@@ -29,6 +29,5 @@ for (let item of sampleItems) {
     const sampleItem = new Item(item.name, item.description, item.priority, item.id);
     itemsCache.addItemToList(sampleItem);
 }
-console.log(sampleProjectMap)
 projectMap.loadProjectMap(sampleProjectMap);
 projectController.render();

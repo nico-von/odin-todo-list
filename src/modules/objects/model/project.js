@@ -5,6 +5,5 @@ export class Project {
         this.name = name;
         this.description = description;
         this.id = id ? id : createUID("project");
-
     }
 }

@@ -17,8 +17,10 @@ export function createProjectController(container, projectMap, itemsCache, proje
                 item.isCompleted,
                 item.priority,
                 item.date,
+                item.id,
                 container)
             todoCard.addEventListener('dblclick', todoCardClickHandler);
+            todoCard.addEventListener('keyup', todoCardFocusOutHandler);
             todoCard.addEventListener('focusout', todoCardFocusOutHandler);
         }
     }

@@ -1,4 +1,4 @@
-export function createElem(elem = "div", classNames = [], parentElem = null, name = null) {
+export function createElem(elem = "div", classNames = [], parentElem = null, id = null) {
     const newElem = document.createElement(elem);
     if (parentElem) {
         parentElem.appendChild(newElem);
@@ -6,8 +6,8 @@ export function createElem(elem = "div", classNames = [], parentElem = null, nam
     if (classNames.length != 0) {
         newElem.classList.add(...classNames);
     }
-    if (name) {
-        newElem.name = name;
+    if (id) {
+        newElem.id = id;
     }
     return newElem;
 }

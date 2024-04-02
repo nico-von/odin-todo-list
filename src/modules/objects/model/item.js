@@ -5,7 +5,6 @@ export class Item{
         this.name = name;
         this.description = description;
         this.priority = priority;
-        this.date = date;
         this.isCompleted = false;
         this.id = createUID("item");
     };

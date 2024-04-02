@@ -20,7 +20,7 @@ for (let project of sampleProjects) {
 }
 
 for (let item of sampleItems) {
-    const sampleItem = new Item(item.name, item.description, item.priority, item.date);
+    const sampleItem = new Item(item.name, item.description, item.priority);
     itemsCache.addItemToList(sampleItem);
     projectMap.addItemToProject("default", sampleItem.id);
 }

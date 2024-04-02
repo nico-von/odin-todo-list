@@ -3,7 +3,7 @@ import { createElem, resetElement } from "./elements";
 const EDIT_BUTTON_LBL = "Edit";
 const DELETE_BUTTON_LBL = "Delete";
 
-export function createTodoCard(name = "", description = "", isCompleted = false, priority, date, id, container) {
+export function createTodoCard(name = "", description = "", isCompleted = false, priority, id, container) {
     let todoElem = createElem("div", ["todo-card"], container);
     let todoTitle = createElem("div", ["todo-title"], todoElem);
     let todoDesc = createElem("div", ["todo-desc"], todoElem);
@@ -12,10 +12,14 @@ export function createTodoCard(name = "", description = "", isCompleted = false,
     todoTitleText.textContent = name;
     todoDescText.textContent = description;
 
+    let todoPriority = createElem("div", ["todo-priority"], todoElem);
+    let todoPriorityText = createElem("p", [], todoPriority);
+    todoPriorityText.textContent = priority;
+
     let todoElemActions = createElem("div", ["todo-actions"], todoElem);
-    let todoPriority = createElem("input", ["todo-priority"], todoElemActions, id);
-    todoPriority.setAttribute("type", "checkbox");
-    if (isCompleted) todoPriority.setAttribute("checked", "");
+    let todoCompleted = createElem("input", ["todo-complete"], todoElemActions, id);
+    todoCompleted.setAttribute("type", "checkbox");
+    if (isCompleted) todoCompleted.setAttribute("checked", "");
 
     let todoPriorityLabel = createElem("label", [], todoElemActions);
     todoPriorityLabel.textContent = "Completed";
@@ -35,6 +39,21 @@ export function editTodoCardText(todoElem) {
     todoTitleInput.setAttribute("type", "text");
     todoTitleInput.setAttribute("value", todoElemText);
     todoTitleInput.focus();
+}
+
+export function editTodoCardNumeric(todoElem) {
+    let todoElemText = todoElem.textContent;
+    todoElem.textContent = "";
+
+    let todoTitleInput = createElem("input", [], todoElem);
+    todoTitleInput.setAttribute("type", "number");
+    todoTitleInput.setAttribute("value", todoElemText);
+    todoTitleInput.setAttribute("min", "0");
+    todoTitleInput.focus();
+}
+
+export function removeTodoCard(todoElem) {
+    todoElem.remove();
 }
 
 export function commitTodoCardText(todoElem) {

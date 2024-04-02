@@ -4,19 +4,28 @@
             "name": "Fetch the dog.",
             "description": "The dog needs fetching",
             "priority": 0,
+            "id": "sample-1",
             "isCompleted": false
         },
         {
             "name": "Get CPR",
             "description": "The Chumbie needs CPR",
             "priority": 1,
+            "id": "sample-2",
             "isCompleted": false
         }
     ],
     "projects": [
         {
             "name": "Sample Project",
-            "description": "Sample purposes only"
+            "description": "Sample purposes only",
+            "id": "project-sample-1"
         }
-    ]
+    ],
+    "projectMap": {
+        "default": ["sample-1"],
+        "project-sample-1": [
+            "sample-2"
+        ]
+    }
 }

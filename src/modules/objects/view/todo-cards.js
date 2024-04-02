@@ -1,7 +1,5 @@
 import { createElem, resetElement } from "./elements";
 
-const EDIT_BUTTON_LBL = "Edit";
-const DELETE_BUTTON_LBL = "Delete";
 
 export function createTodoCard(name = "", description = "", isCompleted = false, priority, id, container) {
     let todoElem = createElem("div", ["todo-card"], container);
@@ -26,7 +24,7 @@ export function createTodoCard(name = "", description = "", isCompleted = false,
     todoPriorityLabel.htmlFor = id;
 
     let todoDelButton = createElem("button", ["todo-del-btn"], todoElemActions);
-    todoDelButton.textContent = DELETE_BUTTON_LBL;
+    todoDelButton.textContent = "Delete";
 
     return todoElem;
 }

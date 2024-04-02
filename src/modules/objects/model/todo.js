@@ -12,7 +12,7 @@ export function createItemCache() {
     function removeItemFromList(itemId) {
         delete items[itemId];
     };
-    function getItem(itemId){
+    function getItem(itemId) {
         return items[itemId];
     }
     return {
@@ -24,6 +24,7 @@ export function createItemCache() {
 
 export function createProjectCache() {
     let projects = {};
+    let defProject = new Project("General", "", "default");
     function addProjectToList(project) {
         if (Object.getPrototypeOf(project) !== Project.prototype) {
             return;
@@ -33,8 +34,13 @@ export function createProjectCache() {
     function removeProjectFromList(projectId) {
         projects[projectId];
     }
+    function getProjects() {
+        return Object.values(projects);
+    }
+    addProjectToList(defProject);
     return {
         addProjectToList,
+        getProjects,
         removeProjectFromList
     }
 }
@@ -56,7 +62,7 @@ export function createProjectMap() {
         }
         projects[projectId].push(itemId);
     }
-    function getProject(projectId){
+    function getProject(projectId) {
         return projects[projectId];
     }
     function getProjects() {

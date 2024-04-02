@@ -1,9 +1,10 @@
 import createUID from "../../helpers/uid"
 
-export class Project{
-    constructor(name, description) {
+export class Project {
+    constructor(name, description, id) {
         this.name = name;
         this.description = description;
-        this.id = createUID("project");
+        this.id = id ? id : createUID("project");
+
     }
 }

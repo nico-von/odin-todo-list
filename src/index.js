@@ -9,18 +9,24 @@ import { createProjectController } from './modules/objects/controller/project.js
 const itemsCache = createItemCache();
 const projectsCache = createProjectCache();
 const projectMap = createProjectMap();
-const projectController = createProjectController(mainContainer, projectMap, itemsCache, projectsCache);
+const projectController = createProjectController(
+    sidebarContainer,
+    mainContainer,
+    projectMap,
+    itemsCache,
+    projectsCache);
+
 const sampleItems = sampleData.items;
 const sampleProjects = sampleData.projects;
 
 for (let project of sampleProjects) {
-    const sampleProject = new Project(project.name, project.description);
+    const sampleProject = new Project(project.name, project.description, project.id);
     projectsCache.addProjectToList(sampleProject);
     projectMap.addProjectToMap(sampleProject.id);
 }
 
 for (let item of sampleItems) {
-    const sampleItem = new Item(item.name, item.description, item.priority);
+    const sampleItem = new Item(item.name, item.description, item.priority, item.id);
     itemsCache.addItemToList(sampleItem);
     projectMap.addItemToProject("default", sampleItem.id);
 }

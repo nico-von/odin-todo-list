@@ -1,3 +1,4 @@
+import { resetElement } from "../view/elements";
 import { createProjectsView } from "../view/projects-view";
 import { createTodoCard } from "../view/todo-cards";
 import { commitTodoCardText, editTodoCardNumeric, editTodoCardText, removeTodoCard } from "../view/todo-cards";
@@ -8,7 +9,9 @@ export function createProjectController(projectContainer, itemContainer, project
         let projectView = createProjectsView(projects, projectContainer);
         projectView.addEventListener('click', projectCardClickHandler);
     }
+
     function renderItems(projectId = "default") {
+        resetElement(itemContainer);
         let project = projectMap.getProject(projectId);
         if (!project) {
             project = projectMap.getProject("default");
@@ -65,8 +68,8 @@ export function createProjectController(projectContainer, itemContainer, project
     }
 
     function projectCardClickHandler(e) {
-        if (e.target.matches("h3")) {
-            console.log("HEYLO")
+        if (e.target.matches(".project>h3")) {
+            renderItems(e.target.parentElement.id);
         }
     }
     return {

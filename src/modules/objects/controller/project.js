@@ -77,10 +77,9 @@ export function createProjectController(projectContainer, itemContainer, project
                 itemsCache.setPropValue(e.currentTarget.id, "description", e.target.value);
             } else if (e.target.matches(".todo-priority input")) {
                 itemsCache.setPropValue(e.currentTarget.id, "priority", parseFloat(e.target.value));
-            } else if (e.target.matches(".project>h3")){
-                projectsCache.setPropValue(e.currentTarget.id, "name", e.target.value);
+            } else if (e.target.matches(".projects-view input")){
+                projectsCache.setPropValue(e.target.parentElement.parentElement.id, "name", e.target.value);
             }
-
             commitElemText(e.target);
         }
     }

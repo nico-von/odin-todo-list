@@ -10,7 +10,7 @@ const itemsCache = createCache(Item);
 const projectsCache = createCache(Project);
 const projectMap = createProjectMap();
 
-let defProject = new Project("General", "", "default");
+let defProject = new Project("General", "default");
 projectsCache.addObjToList(defProject);
 
 const projectController = createProjectController(

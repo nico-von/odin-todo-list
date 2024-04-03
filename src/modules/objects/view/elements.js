@@ -26,3 +26,35 @@ export function renderElem(container, children) {
         container.appendChild(children)
     }
 }
+
+export function editText(elem) {
+    let elemText = elem.textContent;
+    elem.textContent = "";
+
+    let titleInput = createElem("input", [], elem);
+    titleInput.setAttribute("type", "text");
+    titleInput.setAttribute("value", elemText);
+    titleInput.focus();
+}
+
+export function editTextNumeric(elem) {
+    let elemText = elem.textContent;
+    elem.textContent = "";
+
+    let titleInput = createElem("input", [], elem);
+    titleInput.setAttribute("type", "number");
+    titleInput.setAttribute("value", elemText);
+    titleInput.setAttribute("min", "0");
+    titleInput.focus();
+}
+
+export function removeElem(elem) {
+    elem.remove();
+}
+
+export function commitElemText(elem) {
+    let elemParent = elem.parentElement;
+    let elemText = elem.value;
+    elemParent.textContent = elemText;
+
+}

@@ -18,7 +18,6 @@
     "projects": [
         {
             "name": "Sample Project",
-            "description": "Sample purposes only",
             "id": "project-sample-1"
         }
     ],

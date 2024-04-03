@@ -1,4 +1,4 @@
-import { createElem, resetElement } from "./elements";
+import { createElem} from "./elements";
 
 
 export function createTodoCard(name = "", description = "", isCompleted = false, priority, id, container) {
@@ -28,36 +28,4 @@ export function createTodoCard(name = "", description = "", isCompleted = false,
     todoDelButton.textContent = "Delete";
 
     return todoElem;
-}
-
-export function editTodoCardText(todoElem) {
-    let todoElemText = todoElem.textContent;
-    todoElem.textContent = "";
-
-    let todoTitleInput = createElem("input", [], todoElem);
-    todoTitleInput.setAttribute("type", "text");
-    todoTitleInput.setAttribute("value", todoElemText);
-    todoTitleInput.focus();
-}
-
-export function editTodoCardNumeric(todoElem) {
-    let todoElemText = todoElem.textContent;
-    todoElem.textContent = "";
-
-    let todoTitleInput = createElem("input", [], todoElem);
-    todoTitleInput.setAttribute("type", "number");
-    todoTitleInput.setAttribute("value", todoElemText);
-    todoTitleInput.setAttribute("min", "0");
-    todoTitleInput.focus();
-}
-
-export function removeTodoCard(todoElem) {
-    todoElem.remove();
-}
-
-export function commitTodoCardText(todoElem) {
-    let todoElemParent = todoElem.parentElement;
-    let todoElemText = todoElem.value;
-    todoElemParent.textContent = todoElemText;
-
 }

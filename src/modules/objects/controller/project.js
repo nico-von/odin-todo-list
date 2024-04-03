@@ -1,7 +1,6 @@
-import { resetElement } from "../view/elements";
+import { commitElemText, editText, editTextNumeric, resetElement } from "../view/elements";
 import { createProjectsView } from "../view/projects-view";
 import { createTodoCard } from "../view/todo-cards";
-import { commitTodoCardText, editTodoCardNumeric, editTodoCardText, removeTodoCard } from "../view/todo-cards";
 
 export function createProjectController(projectContainer, itemContainer, projectMap, itemsCache, projectsCache) {
     function renderProjects() {
@@ -45,16 +44,16 @@ export function createProjectController(projectContainer, itemContainer, project
         e.stopPropagation;
         if (e.target.matches(".todo-title>h3:first-child")
             || e.target.matches(".todo-desc>p:first-child")) {
-            editTodoCardText(e.target);
+            editText(e.target);
         } else if (e.target.matches(".todo-priority>p:first-child")) {
-            editTodoCardNumeric(e.target);
+            editTextNumeric(e.target);
         }
     }
 
     function todoCardClickHandler(e) {
         if (e.target.matches(".todo-del-btn")) {
             itemsCache.removeItemFromList(e.currentTarget.id);
-            removeTodoCard(e.currentTarget);
+            removeElem(e.currentTarget);
         } else if (e.target.matches("input[type='checkbox'].todo-complete")) {
             itemsCache.setItemPropValue(e.currentTarget.id, "isCompleted", e.target.checked)
         }
@@ -77,13 +76,18 @@ export function createProjectController(projectContainer, itemContainer, project
                 itemsCache.setItemPropValue(e.currentTarget.id, "priority", parseFloat(e.target.value));
             }
 
-            commitTodoCardText(e.target);
+            commitElemText(e.target);
         }
     }
 
     function projectCardClickHandler(e) {
         if (e.target.matches(".project>h3")) {
             renderItems(e.target.parentElement.id);
+        }
+    }
+    function projectCardDblClickHandler(e){
+        if (e.target.matches(".project>h3")){
+            // editTodoCardText()
         }
     }
     return {

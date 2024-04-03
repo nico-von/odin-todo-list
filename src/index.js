@@ -21,7 +21,7 @@ const sampleProjects = sampleData.projects;
 const sampleProjectMap = sampleData.projectMap;
 
 for (let project of sampleProjects) {
-    const sampleProject = new Project(project.name, project.description, project.id);
+    const sampleProject = new Project(project.name, project.id);
     projectsCache.addProjectToList(sampleProject);
 }
 

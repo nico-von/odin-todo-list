@@ -22,7 +22,7 @@ export function createItemCache() {
         return items[itemId];
     }
     function getItems() {
-        return items;
+        return Objects.values(items);
     }
     return {
         addItemToList,
@@ -43,15 +43,22 @@ export function createProjectCache() {
         projects[project.id] = project;
     };
     function removeProjectFromList(projectId) {
-        projects[projectId];
+        delete projects[projectId];
     }
     function getProjects() {
         return Object.values(projects);
     }
+    function setProjectPropValue(projectId, prop, value) {
+        if (!Object.hasOwn(projects[projectId], prop)){
+            return;
+        }
+        projects[projectId][prop] = value;
+    };
     addProjectToList(defProject);
     return {
         addProjectToList,
         getProjects,
+        setProjectPropValue,
         removeProjectFromList
     }
 }

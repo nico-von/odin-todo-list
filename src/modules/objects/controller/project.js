@@ -7,6 +7,9 @@ export function createProjectController(projectContainer, itemContainer, project
         let projects = projectsCache.getProjects();
         let projectView = createProjectsView(projects, projectContainer);
         projectView.addEventListener('click', projectCardClickHandler);
+        projectView.addEventListener('dblclick', projectCardDblClickHandler);
+        projectView.addEventListener('keyup', focusOutHandler);
+        projectView.addEventListener('focusout', focusOutHandler);
     }
 
     function renderItems(projectId = "default") {
@@ -31,8 +34,8 @@ export function createProjectController(projectContainer, itemContainer, project
                 itemContainer)
             todoCard.addEventListener('click', todoCardClickHandler);
             todoCard.addEventListener('dblclick', todoCardDblClickHandler);
-            todoCard.addEventListener('keyup', todoCardFocusOutHandler);
-            todoCard.addEventListener('focusout', todoCardFocusOutHandler);
+            todoCard.addEventListener('keyup', focusOutHandler);
+            todoCard.addEventListener('focusout', focusOutHandler);
         }
     }
     function render() {
@@ -60,7 +63,7 @@ export function createProjectController(projectContainer, itemContainer, project
 
     }
 
-    function todoCardFocusOutHandler(e) {
+    function focusOutHandler(e) {
         e.stopPropagation;
         if (((e.type === "keyup" && e.key === "Enter")
             || (e.type === "focusout"
@@ -74,6 +77,8 @@ export function createProjectController(projectContainer, itemContainer, project
                 itemsCache.setItemPropValue(e.currentTarget.id, "description", e.target.value);
             } else if (e.target.matches(".todo-priority input")) {
                 itemsCache.setItemPropValue(e.currentTarget.id, "priority", parseFloat(e.target.value));
+            } else if (e.target.matches(".project>h3")){
+                projectsCache.setProjectPropValue(e.currentTarget.id, "name", e.target.value);
             }
 
             commitElemText(e.target);
@@ -87,7 +92,7 @@ export function createProjectController(projectContainer, itemContainer, project
     }
     function projectCardDblClickHandler(e){
         if (e.target.matches(".project>h3")){
-            // editTodoCardText()
+            editText(e.target);
         }
     }
     return {

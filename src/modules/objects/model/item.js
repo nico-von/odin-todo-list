@@ -9,7 +9,5 @@ export class Item{
         this.id = id ? id : createUID("item");
     };
     
-    toggleCompleted() {
-        this.isCompleted = !this.isCompleted;
-    }
+    
 }

@@ -9,6 +9,14 @@ export function createItemCache() {
         }
         items[item.id] = item;
     };
+    function setItemPropValue(itemId, prop, value) {
+        if (!Object.hasOwn(items[itemId], prop)){
+            console.log(Item.prototype)
+            return;
+        }
+        items[itemId][prop] = value;
+        console.log(items[itemId])
+    };
     function removeItemFromList(itemId) {
         delete items[itemId];
     };
@@ -18,6 +26,7 @@ export function createItemCache() {
     return {
         addItemToList,
         getItem,
+        setItemPropValue,
         removeItemFromList
     }
 }

@@ -62,8 +62,16 @@ export function createProjectController(projectContainer, itemContainer, project
                     || e.target.getAttribute("type") === "number"))
             && e.target.matches("input"))) {
 
-            commitTodoCardText(e.target);
+            if (e.target.matches(".todo-title input")){
+                itemsCache.setItemPropValue(e.currentTarget.id, "name", e.target.value);
+            } else if (e.target.matches(".todo-desc input")){
+                itemsCache.setItemPropValue(e.currentTarget.id, "description", e.target.value);
+            } else if (e.target.matches(".todo-priority input")){
+                console.log(e.target.value)
+                itemsCache.setItemPropValue(e.currentTarget.id, "priority", parseFloat(e.target.value));
+            }
 
+            commitTodoCardText(e.target);
         }
     }
 

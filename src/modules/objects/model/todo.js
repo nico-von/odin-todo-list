@@ -1,65 +1,32 @@
-import { Item } from "./item";
-import { Project } from "./project";
-
-export function createItemCache() {
-    let items = {};
-    function addItemToList(item) {
-        if (Object.getPrototypeOf(item) !== Item.prototype) {
+export function createCache(classTemplate) {
+    let cache = {};
+    function addObjToList(obj) {
+        if (Object.getPrototypeOf(obj) !== classTemplate.prototype) {
             return;
         }
-        items[item.id] = item;
+        cache[obj.id] = obj;
     };
-    function setItemPropValue(itemId, prop, value) {
-        if (!Object.hasOwn(items[itemId], prop)){
+    function setPropValue(objId, prop, value) {
+        if (!Object.hasOwn(cache[objId], prop)){
             return;
         }
-        items[itemId][prop] = value;
+        cache[objId][prop] = value;
     };
-    function removeItemFromList(itemId) {
-        delete items[itemId];
+    function removeObjFromList(objId) {
+        delete cache[objId];
     };
-    function getItem(itemId) {
-        return items[itemId];
+    function getObj(objId) {
+        return cache[objId];
     }
-    function getItems() {
-        return Objects.values(items);
+    function getObjs() {
+        return Object.values(cache);
     }
     return {
-        addItemToList,
-        getItem,
-        setItemPropValue,
-        getItems,
-        removeItemFromList
-    }
-}
-
-export function createProjectCache() {
-    let projects = {};
-    let defProject = new Project("General", "", "default");
-    function addProjectToList(project) {
-        if (Object.getPrototypeOf(project) !== Project.prototype) {
-            return;
-        }
-        projects[project.id] = project;
-    };
-    function removeProjectFromList(projectId) {
-        delete projects[projectId];
-    }
-    function getProjects() {
-        return Object.values(projects);
-    }
-    function setProjectPropValue(projectId, prop, value) {
-        if (!Object.hasOwn(projects[projectId], prop)){
-            return;
-        }
-        projects[projectId][prop] = value;
-    };
-    addProjectToList(defProject);
-    return {
-        addProjectToList,
-        getProjects,
-        setProjectPropValue,
-        removeProjectFromList
+        addObjToList,
+        getObj,
+        setPropValue,
+        getObjs,
+        removeObjFromList
     }
 }
 

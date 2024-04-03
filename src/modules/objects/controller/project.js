@@ -4,7 +4,7 @@ import { createTodoCard } from "../view/todo-cards";
 
 export function createProjectController(projectContainer, itemContainer, projectMap, itemsCache, projectsCache) {
     function renderProjects() {
-        let projects = projectsCache.getProjects();
+        let projects = projectsCache.getObjs();
         let projectView = createProjectsView(projects, projectContainer);
         projectView.addEventListener('click', projectCardClickHandler);
         projectView.addEventListener('dblclick', projectCardDblClickHandler);
@@ -20,7 +20,7 @@ export function createProjectController(projectContainer, itemContainer, project
         }
         for (let i = 0; i < project.length; i++) {
             let itemId = project[i];
-            let item = itemsCache.getItem(itemId);
+            let item = itemsCache.getObj(itemId);
             
             if (!item) {
                 projectMap.removeItemFromList(projectId, i);
@@ -55,10 +55,10 @@ export function createProjectController(projectContainer, itemContainer, project
 
     function todoCardClickHandler(e) {
         if (e.target.matches(".todo-del-btn")) {
-            itemsCache.removeItemFromList(e.currentTarget.id);
+            itemsCache.removeObjFromList(e.currentTarget.id);
             removeElem(e.currentTarget);
         } else if (e.target.matches("input[type='checkbox'].todo-complete")) {
-            itemsCache.setItemPropValue(e.currentTarget.id, "isCompleted", e.target.checked)
+            itemsCache.setPropValue(e.currentTarget.id, "isCompleted", e.target.checked)
         }
 
     }
@@ -72,13 +72,13 @@ export function createProjectController(projectContainer, itemContainer, project
             && e.target.matches("input"))) {
 
             if (e.target.matches(".todo-title input")) {
-                itemsCache.setItemPropValue(e.currentTarget.id, "name", e.target.value);
+                itemsCache.setPropValue(e.currentTarget.id, "name", e.target.value);
             } else if (e.target.matches(".todo-desc input")) {
-                itemsCache.setItemPropValue(e.currentTarget.id, "description", e.target.value);
+                itemsCache.setPropValue(e.currentTarget.id, "description", e.target.value);
             } else if (e.target.matches(".todo-priority input")) {
-                itemsCache.setItemPropValue(e.currentTarget.id, "priority", parseFloat(e.target.value));
+                itemsCache.setPropValue(e.currentTarget.id, "priority", parseFloat(e.target.value));
             } else if (e.target.matches(".project>h3")){
-                projectsCache.setProjectPropValue(e.currentTarget.id, "name", e.target.value);
+                projectsCache.setPropValue(e.currentTarget.id, "name", e.target.value);
             }
 
             commitElemText(e.target);

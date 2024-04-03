@@ -16,9 +16,12 @@ export function createProjectController(projectContainer, itemContainer, project
         if (!project) {
             project = projectMap.getProject("default");
         }
-        for (let itemId of project) {
+        for (let i = 0; i < project.length; i++) {
+            let itemId = project[i];
             let item = itemsCache.getItem(itemId);
+            
             if (!item) {
+                projectMap.removeItemFromList(projectId, i);
                 continue;
             }
             const todoCard = createTodoCard(item.name,
@@ -50,6 +53,7 @@ export function createProjectController(projectContainer, itemContainer, project
 
     function todoCardClickHandler(e) {
         if (e.target.matches(".todo-del-btn")) {
+            itemsCache.removeItemFromList(e.currentTarget.id);
             removeTodoCard(e.currentTarget);
         } else if (e.target.matches("input[type='checkbox'].todo-complete")) {
             itemsCache.setItemPropValue(e.currentTarget.id, "isCompleted", e.target.checked)

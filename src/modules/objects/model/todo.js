@@ -14,7 +14,6 @@ export function createItemCache() {
             return;
         }
         items[itemId][prop] = value;
-        console.log(items[itemId]); 
     };
     function removeItemFromList(itemId) {
         delete items[itemId];
@@ -22,10 +21,14 @@ export function createItemCache() {
     function getItem(itemId) {
         return items[itemId];
     }
+    function getItems() {
+        return items;
+    }
     return {
         addItemToList,
         getItem,
         setItemPropValue,
+        getItems,
         removeItemFromList
     }
 }
@@ -76,6 +79,9 @@ export function createProjectMap() {
     function getProjects() {
         return projects;
     }
+    function removeItemFromList(projectId, index){
+        projects[projectId].splice(index, 1);
+    }
     function loadProjectMap(projectObject) {
         projects = projectObject;
     }
@@ -85,6 +91,7 @@ export function createProjectMap() {
         addItemToProject,
         getProjects,
         getProject,
-        loadProjectMap
+        loadProjectMap,
+        removeItemFromList
     }
 }

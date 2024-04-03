@@ -7,7 +7,7 @@ export function createCache(classTemplate) {
         cache[obj.id] = obj;
     };
     function setPropValue(objId, prop, value) {
-        if (!Object.hasOwn(cache[objId], prop)){
+        if (!Object.hasOwn(cache[objId], prop) || (prop === "id")){
             return;
         }
         cache[objId][prop] = value;

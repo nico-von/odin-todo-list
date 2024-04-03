@@ -1,15 +1,17 @@
 import { commitElemText, editText, editTextNumeric, resetElement } from "../view/elements";
-import { createProjectsView } from "../view/projects-view";
+import { createProjectCard } from "../view/projects-view";
 import { createTodoCard } from "../view/todo-cards";
 
 export function createProjectController(projectContainer, itemContainer, projectMap, itemsCache, projectsCache) {
     function renderProjects() {
         let projects = projectsCache.getObjs();
-        let projectView = createProjectsView(projects, projectContainer);
-        projectView.addEventListener('click', projectCardClickHandler);
-        projectView.addEventListener('dblclick', projectCardDblClickHandler);
-        projectView.addEventListener('keyup', focusOutHandler);
-        projectView.addEventListener('focusout', focusOutHandler);
+        for(let i = 0; i < projects.length; i++){
+            let projectCard = createProjectCard(projects[i], projectContainer);
+            projectCard.addEventListener('click', projectCardClickHandler);
+            projectCard.addEventListener('dblclick', projectCardDblClickHandler);
+            projectCard.addEventListener('keyup', focusOutHandler);
+            projectCard.addEventListener('focusout', focusOutHandler);
+        }
     }
 
     function renderItems(projectId = "default") {
@@ -77,8 +79,8 @@ export function createProjectController(projectContainer, itemContainer, project
                 itemsCache.setPropValue(e.currentTarget.id, "description", e.target.value);
             } else if (e.target.matches(".todo-priority input")) {
                 itemsCache.setPropValue(e.currentTarget.id, "priority", parseFloat(e.target.value));
-            } else if (e.target.matches(".projects-view input")){
-                projectsCache.setPropValue(e.target.parentElement.parentElement.id, "name", e.target.value);
+            } else if (e.target.matches(".project input")){
+                projectsCache.setPropValue(e.currentTarget.id, "name", e.target.value);
             }
             commitElemText(e.target);
         }

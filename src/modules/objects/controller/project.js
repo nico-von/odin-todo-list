@@ -1,4 +1,5 @@
 import { commitElemText, editText, editTextNumeric, resetElement, removeElem } from "../view/elements";
+import { createAddNewCard } from "../view/general-controls";
 import { createProjectCard } from "../view/projects-view";
 import { createTodoCard } from "../view/todo-cards";
 
@@ -12,6 +13,8 @@ export function createProjectController(projectContainer, itemContainer, project
             projectCard.addEventListener('keyup', focusOutHandler);
             projectCard.addEventListener('focusout', focusOutHandler);
         }
+        let addCardDiv = createAddNewCard(projectContainer, "project");
+        addCardDiv.addEventListener('click', addCardHandler);
     }
 
     function renderItems(projectId = "default") {
@@ -39,6 +42,8 @@ export function createProjectController(projectContainer, itemContainer, project
             todoCard.addEventListener('keyup', focusOutHandler);
             todoCard.addEventListener('focusout', focusOutHandler);
         }
+        let addCardDiv = createAddNewCard(itemContainer, "item");
+        addCardDiv.addEventListener('click', addCardHandler);
     }
     function render() {
         renderItems();
@@ -61,6 +66,8 @@ export function createProjectController(projectContainer, itemContainer, project
             removeElem(e.currentTarget);
         } else if (e.target.matches("input[type='checkbox'].todo-complete")) {
             itemsCache.setPropValue(e.currentTarget.id, "isCompleted", e.target.checked)
+        } else if (e.target.matches(".add-card")){
+            console.log("ping");
         }
 
     }
@@ -98,6 +105,14 @@ export function createProjectController(projectContainer, itemContainer, project
     function projectCardDblClickHandler(e){
         if (e.target.matches(".project>h3")){
             editText(e.target);
+        }
+    }
+    function addCardHandler(e){
+        e.stopPropagation;
+        if(e.target.matches(".add-card-item")){
+            console.log("ping");
+        } else if (e.target.matches(".add-card-project")) {
+            console.log("PING");
         }
     }
     return {

@@ -1,4 +1,4 @@
-import { commitElemText, editText, editTextNumeric, resetElement } from "../view/elements";
+import { commitElemText, editText, editTextNumeric, resetElement, removeElem } from "../view/elements";
 import { createProjectCard } from "../view/projects-view";
 import { createTodoCard } from "../view/todo-cards";
 
@@ -89,6 +89,10 @@ export function createProjectController(projectContainer, itemContainer, project
     function projectCardClickHandler(e) {
         if (e.target.matches(".project>h3")) {
             renderItems(e.target.parentElement.id);
+        } else if (e.target.matches(".project-actions>button")){
+            projectsCache.removeObjFromList(e.currentTarget.id);
+            projectMap.removeProjectFromMap(e.currentTarget.id);
+            removeElem(e.currentTarget);
         }
     }
     function projectCardDblClickHandler(e){

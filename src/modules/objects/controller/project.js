@@ -1,3 +1,4 @@
+import { Item } from "../model/item";
 import { commitElemText, editText, editTextNumeric, resetElement, removeElem } from "../view/elements";
 import { createAddNewCard } from "../view/general-controls";
 import { createProjectCard } from "../view/projects-view";
@@ -6,7 +7,7 @@ import { createTodoCard } from "../view/todo-cards";
 export function createProjectController(projectContainer, itemContainer, projectMap, itemsCache, projectsCache) {
     function renderProjects() {
         let projects = projectsCache.getObjs();
-        for(let i = 0; i < projects.length; i++){
+        for (let i = 0; i < projects.length; i++) {
             let projectCard = createProjectCard(projects[i], projectContainer);
             projectCard.addEventListener('click', projectCardClickHandler);
             projectCard.addEventListener('dblclick', projectCardDblClickHandler);
@@ -16,7 +17,19 @@ export function createProjectController(projectContainer, itemContainer, project
         let addCardDiv = createAddNewCard(projectContainer, "project");
         addCardDiv.addEventListener('click', addCardHandler);
     }
-
+    function renderItemCard(item) {
+        const todoCard = createTodoCard(item.name,
+            item.description,
+            item.isCompleted,
+            item.priority,
+            item.id,
+            itemContainer)
+        todoCard.addEventListener('click', todoCardClickHandler);
+        todoCard.addEventListener('dblclick', todoCardDblClickHandler);
+        todoCard.addEventListener('keyup', focusOutHandler);
+        todoCard.addEventListener('focusout', focusOutHandler);
+    }
+    
     function renderItems(projectId = "default") {
         resetElement(itemContainer);
         let project = projectMap.getProject(projectId);
@@ -26,23 +39,14 @@ export function createProjectController(projectContainer, itemContainer, project
         for (let i = 0; i < project.length; i++) {
             let itemId = project[i];
             let item = itemsCache.getObj(itemId);
-            
+
             if (!item) {
                 projectMap.removeItemFromList(projectId, i);
                 continue;
             }
-            const todoCard = createTodoCard(item.name,
-                item.description,
-                item.isCompleted,
-                item.priority,
-                item.id,
-                itemContainer)
-            todoCard.addEventListener('click', todoCardClickHandler);
-            todoCard.addEventListener('dblclick', todoCardDblClickHandler);
-            todoCard.addEventListener('keyup', focusOutHandler);
-            todoCard.addEventListener('focusout', focusOutHandler);
+            renderItemCard(item);
         }
-        let addCardDiv = createAddNewCard(itemContainer, "item");
+        let addCardDiv = createAddNewCard(itemContainer, "item", projectId);
         addCardDiv.addEventListener('click', addCardHandler);
     }
     function render() {
@@ -66,7 +70,7 @@ export function createProjectController(projectContainer, itemContainer, project
             removeElem(e.currentTarget);
         } else if (e.target.matches("input[type='checkbox'].todo-complete")) {
             itemsCache.setPropValue(e.currentTarget.id, "isCompleted", e.target.checked)
-        } else if (e.target.matches(".add-card")){
+        } else if (e.target.matches(".add-card")) {
             console.log("ping");
         }
 
@@ -86,7 +90,7 @@ export function createProjectController(projectContainer, itemContainer, project
                 itemsCache.setPropValue(e.currentTarget.id, "description", e.target.value);
             } else if (e.target.matches(".todo-priority input")) {
                 itemsCache.setPropValue(e.currentTarget.id, "priority", parseFloat(e.target.value));
-            } else if (e.target.matches(".project input")){
+            } else if (e.target.matches(".project input")) {
                 projectsCache.setPropValue(e.currentTarget.id, "name", e.target.value);
             }
             commitElemText(e.target);
@@ -96,21 +100,22 @@ export function createProjectController(projectContainer, itemContainer, project
     function projectCardClickHandler(e) {
         if (e.target.matches(".project>h3")) {
             renderItems(e.target.parentElement.id);
-        } else if (e.target.matches(".project-actions>button")){
+        } else if (e.target.matches(".project-actions>button")) {
             projectsCache.removeObjFromList(e.currentTarget.id);
             projectMap.removeProjectFromMap(e.currentTarget.id);
             removeElem(e.currentTarget);
         }
     }
-    function projectCardDblClickHandler(e){
-        if (e.target.matches(".project>h3")){
+    function projectCardDblClickHandler(e) {
+        if (e.target.matches(".project>h3")) {
             editText(e.target);
         }
     }
-    function addCardHandler(e){
+    function addCardHandler(e) {
         e.stopPropagation;
-        if(e.target.matches(".add-card-item")){
-            console.log("ping");
+        if (e.target.matches(".add-card-item")) {
+            let newItem = new Item("", "", 0);
+
         } else if (e.target.matches(".add-card-project")) {
             console.log("PING");
         }

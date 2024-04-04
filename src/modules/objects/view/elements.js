@@ -26,15 +26,18 @@ export function renderElem(container, children) {
         container.appendChild(children)
     }
 }
+export function createInputElem(container, elemText) {
+    let titleInput = createElem("input", [], container);
+    titleInput.setAttribute("type", "text");
+    titleInput.setAttribute("value", elemText);
+    titleInput.focus();
+}
 
 export function editText(elem) {
     let elemText = elem.textContent;
     elem.textContent = "";
+    createInputElem(elem, elemText);
 
-    let titleInput = createElem("input", [], elem);
-    titleInput.setAttribute("type", "text");
-    titleInput.setAttribute("value", elemText);
-    titleInput.focus();
 }
 
 export function editTextNumeric(elem) {

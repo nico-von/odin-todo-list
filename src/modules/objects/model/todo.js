@@ -43,7 +43,7 @@ export function createProjectMap() {
     }
     function addItemToProject(projectId, itemId) {
         if (!projects.hasOwnProperty(projectId)) {
-            addProjectToList(projectId);
+            addProjectToMap(projectId);
         }
         projects[projectId].push(itemId);
     }

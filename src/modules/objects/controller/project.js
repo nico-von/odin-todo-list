@@ -14,21 +14,26 @@ export function createProjectController(projectContainer, itemContainer, project
             projectCard.addEventListener('keyup', focusOutHandler);
             projectCard.addEventListener('focusout', focusOutHandler);
         }
-        let addCardDiv = createAddNewCard(projectContainer, "project");
-        addCardDiv.addEventListener('click', addCardHandler);
+        renderAddCardDiv(projectContainer, "project", addCardHandler);
     }
-    function renderItemCard(item) {
+    function renderItemCard(item, isNewItem = false) {
         const todoCard = createTodoCard(item.name,
             item.description,
             item.isCompleted,
             item.priority,
             item.id,
+            isNewItem,
             itemContainer)
         todoCard.addEventListener('click', todoCardClickHandler);
         todoCard.addEventListener('dblclick', todoCardDblClickHandler);
         todoCard.addEventListener('keyup', focusOutHandler);
         todoCard.addEventListener('focusout', focusOutHandler);
     }
+    
+    function renderAddCardDiv(container, distinguisher, handler, projectId = null){
+        let addCardDiv = createAddNewCard(container, distinguisher, projectId);
+        addCardDiv.addEventListener('click', handler);
+    };
     
     function renderItems(projectId = "default") {
         resetElement(itemContainer);
@@ -46,8 +51,7 @@ export function createProjectController(projectContainer, itemContainer, project
             }
             renderItemCard(item);
         }
-        let addCardDiv = createAddNewCard(itemContainer, "item", projectId);
-        addCardDiv.addEventListener('click', addCardHandler);
+        renderAddCardDiv(itemContainer, "item", addCardHandler, projectId); 
     }
     function render() {
         renderItems();
@@ -71,7 +75,8 @@ export function createProjectController(projectContainer, itemContainer, project
         } else if (e.target.matches("input[type='checkbox'].todo-complete")) {
             itemsCache.setPropValue(e.currentTarget.id, "isCompleted", e.target.checked)
         } else if (e.target.matches(".add-card")) {
-            console.log("ping");
+            console.log("ping");let addCardDiv = createAddNewCard(itemContainer, "item", projectId);
+            addCardDiv.addEventListener('click', addCardHandler);
         }
 
     }
@@ -114,8 +119,14 @@ export function createProjectController(projectContainer, itemContainer, project
     function addCardHandler(e) {
         e.stopPropagation;
         if (e.target.matches(".add-card-item")) {
+            let projectId = e.target.getAttribute("data-project-id");
             let newItem = new Item("", "", 0);
-
+            itemsCache.addObjToList(newItem);
+            projectMap.addItemToProject(projectId, newItem.id);
+            
+            e.target.remove();
+            renderItemCard(newItem, true);
+            renderAddCardDiv(itemContainer, "item", addCardHandler, projectId);
         } else if (e.target.matches(".add-card-project")) {
             console.log("PING");
         }

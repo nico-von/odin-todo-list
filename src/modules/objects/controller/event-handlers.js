@@ -20,6 +20,7 @@ export function projectCardClickHandler(e, appData) {
         projectCache.removeObjFromList(e.currentTarget.id);
         projectMap.removeProjectFromMap(e.currentTarget.id);
         removeElem(e.currentTarget);
+        saveData(appData);
     }
 }
 
@@ -76,6 +77,7 @@ export function todoCardClickHandler(e, appData) {
     if (e.target.matches(".todo-del-btn")) {
         itemCache.removeObjFromList(e.currentTarget.id);
         removeElem(e.currentTarget);
+        saveData(appData);
     } else if (e.target.matches("input[type='checkbox'].todo-complete")) {
         itemCache.setPropValue(e.currentTarget.id, "isCompleted", e.target.checked)
     }

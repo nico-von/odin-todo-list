@@ -1,7 +1,6 @@
 import { createAddNewCard } from "../view/general-controls";
 import { createProjectCard } from "../view/projects-view";
 import { createTodoCard } from "../view/todo-cards";
-import { itemCache, projectMap } from "./data";
 import {
     todoCardClickHandler,
     todoCardDblClickHandler,

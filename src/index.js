@@ -1,11 +1,14 @@
 import './style.css';
 import { mainContainer, sidebarContainer } from './modules/objects/view/containers.js';
+import sampleData from './modules/sample-data/sample-data.json' assert {type: 'json'};
+import { load } from './modules/objects/controller/todo.js';
 import { Item } from './modules/objects/model/item.js';
 import { Project } from './modules/objects/model/project.js';
-import sampleData from './modules/sample-data/sample-data.json' assert {type: 'json'};
-import { itemCache, projectCache, projectMap } from './modules/objects/controller/data.js';
-import { load } from './modules/objects/controller/todo.js';
+import { createCache, createProjectMap } from './modules/objects/model/todo.js';
 
+const itemCache = createCache(Item);
+const projectCache = createCache(Project);
+const projectMap = createProjectMap();
 
 let defProject = new Project("General", "default");
 projectCache.addObjToList(defProject);

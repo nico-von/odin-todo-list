@@ -1,18 +1,22 @@
 import { Item } from "../model/item";
+import { Project } from "../model/project";
 import { commitElemText, editText, editTextNumeric, resetElement, removeElem } from "../view/elements";
 import { createAddNewCard } from "../view/general-controls";
 import { createProjectCard } from "../view/projects-view";
 import { createTodoCard } from "../view/todo-cards";
 
 export function createProjectController(projectContainer, itemContainer, projectMap, itemsCache, projectsCache) {
+    function renderProjectCard(project, isNewItem = false) {
+        let projectCard = createProjectCard(project, isNewItem, projectContainer);
+        projectCard.addEventListener('click', projectCardClickHandler);
+        projectCard.addEventListener('dblclick', projectCardDblClickHandler);
+        projectCard.addEventListener('keyup', focusOutHandler);
+        projectCard.addEventListener('focusout', focusOutHandler);
+    }
     function renderProjects() {
         let projects = projectsCache.getObjs();
         for (let i = 0; i < projects.length; i++) {
-            let projectCard = createProjectCard(projects[i], projectContainer);
-            projectCard.addEventListener('click', projectCardClickHandler);
-            projectCard.addEventListener('dblclick', projectCardDblClickHandler);
-            projectCard.addEventListener('keyup', focusOutHandler);
-            projectCard.addEventListener('focusout', focusOutHandler);
+            renderProjectCard(projects[i], false);
         }
         renderAddCardDiv(projectContainer, "project", addCardHandler);
     }
@@ -29,12 +33,12 @@ export function createProjectController(projectContainer, itemContainer, project
         todoCard.addEventListener('keyup', focusOutHandler);
         todoCard.addEventListener('focusout', focusOutHandler);
     }
-    
-    function renderAddCardDiv(container, distinguisher, handler, projectId = null){
+
+    function renderAddCardDiv(container, distinguisher, handler, projectId = null) {
         let addCardDiv = createAddNewCard(container, distinguisher, projectId);
         addCardDiv.addEventListener('click', handler);
     };
-    
+
     function renderItems(projectId = "default") {
         resetElement(itemContainer);
         let project = projectMap.getProject(projectId);
@@ -51,7 +55,7 @@ export function createProjectController(projectContainer, itemContainer, project
             }
             renderItemCard(item);
         }
-        renderAddCardDiv(itemContainer, "item", addCardHandler, projectId); 
+        renderAddCardDiv(itemContainer, "item", addCardHandler, projectId);
     }
     function render() {
         renderItems();
@@ -75,7 +79,7 @@ export function createProjectController(projectContainer, itemContainer, project
         } else if (e.target.matches("input[type='checkbox'].todo-complete")) {
             itemsCache.setPropValue(e.currentTarget.id, "isCompleted", e.target.checked)
         } else if (e.target.matches(".add-card")) {
-            console.log("ping");let addCardDiv = createAddNewCard(itemContainer, "item", projectId);
+            console.log("ping"); let addCardDiv = createAddNewCard(itemContainer, "item", projectId);
             addCardDiv.addEventListener('click', addCardHandler);
         }
 
@@ -123,12 +127,19 @@ export function createProjectController(projectContainer, itemContainer, project
             let newItem = new Item("", "", 0);
             itemsCache.addObjToList(newItem);
             projectMap.addItemToProject(projectId, newItem.id);
-            
+
             e.target.remove();
             renderItemCard(newItem, true);
             renderAddCardDiv(itemContainer, "item", addCardHandler, projectId);
         } else if (e.target.matches(".add-card-project")) {
-            console.log("PING");
+            let newProject = new Project("");
+            projectsCache.addObjToList(newProject);
+            projectMap.addProjectToMap(newProject.id);
+            
+            e.target.remove();
+            renderProjectCard(newProject, true);
+            renderAddCardDiv(projectContainer, "project", addCardHandler);
+            
         }
     }
     return {

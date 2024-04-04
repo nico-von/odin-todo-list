@@ -3,6 +3,7 @@ import { Project } from "../model/project";
 import { commitElemText, editText, editTextNumeric, removeElem } from "../view/elements";
 import { renderAddCardDiv, renderItemCard, renderProjectCard } from "./cards";
 import { renderItems } from "./todo";
+import { saveDataToLocalStorage } from "./data";
 
 export function projectCardDblClickHandler(e) {
     e.stopPropagation;
@@ -24,7 +25,7 @@ export function projectCardClickHandler(e, appData) {
 
 export function addCardHandler(e, appData) {
     e.stopPropagation;
-    const { itemContainer, projectContainer, itemCache, projectCache, projectMap } = appData;
+    const { itemCache, projectCache, projectMap } = appData;
     if (e.target.matches(".add-card-item")) {
         let projectId = e.target.getAttribute("data-project-id");
         let newItem = new Item("", "", 0);
@@ -43,6 +44,7 @@ export function addCardHandler(e, appData) {
         renderProjectCard(newProject, appData, true);
         renderAddCardDiv(appData);
     }
+    saveData(appData);
 }
 
 export function focusOutHandler(e, appData) {
@@ -64,6 +66,7 @@ export function focusOutHandler(e, appData) {
             projectCache.setPropValue(e.currentTarget.id, "name", e.target.value);
         }
         commitElemText(e.target);
+        saveData(appData);
     }
 }
 
@@ -89,3 +92,7 @@ export function todoCardDblClickHandler(e) {
     }
 }
 
+function saveData(appData) {
+    const {itemCache, projectCache, projectMap} = appData;
+    saveDataToLocalStorage(itemCache.getCache(), projectCache.getCache(), projectMap.getProjects())
+}

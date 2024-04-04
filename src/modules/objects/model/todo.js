@@ -21,11 +21,19 @@ export function createCache(classTemplate) {
     function getObjs() {
         return Object.values(cache);
     }
+    function getCache() {
+        return cache;
+    }
+    function setCache(newCache) {
+        cache = newCache;
+    }
     return {
         addObjToList,
         getObj,
         setPropValue,
         getObjs,
+        getCache,
+        setCache,
         removeObjFromList
     }
 }

@@ -10,7 +10,9 @@ const itemCache = createCache(Item);
 const projectCache = createCache(Project);
 const projectMap = createProjectMap();
 
-let defProject = new Project("General", "default");
+const defaultId = "default";
+let currentLoadedProject = defaultId;
+let defProject = new Project("General", defaultId);
 projectCache.addObjToList(defProject);
 
 const existingData = loadDataFromLocalStorage(itemCache.getCache(), projectCache.getCache(), projectMap.getProjects());
@@ -18,6 +20,7 @@ if (existingData) {
     itemCache.setCache(existingData.items);
     projectCache.setCache(existingData.projects);
     projectMap.loadProjectMap(existingData.projectMap);
+    currentLoadedProject = existingData.currentLoadedProject;
 }
-// console.log(storageAvailable("localStorage"));
-load(mainContainer, sidebarContainer, projectCache, itemCache, projectMap);
+
+load(mainContainer, sidebarContainer, projectCache, itemCache, projectMap, currentLoadedProject);

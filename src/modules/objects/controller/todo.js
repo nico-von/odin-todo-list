@@ -30,8 +30,8 @@ function renderProjects(appData) {
     renderAddCardDiv(appData);
 }
 
-export function load(itemContainer, projectContainer, projectCache, itemCache, projectMap) {
+export function load(itemContainer, projectContainer, projectCache, itemCache, projectMap, currentLoadedProject) {
     const appData = { itemContainer, projectContainer, projectCache, itemCache, projectMap }
-    renderItems(appData);
+    renderItems(appData, currentLoadedProject);
     renderProjects(appData);
 }

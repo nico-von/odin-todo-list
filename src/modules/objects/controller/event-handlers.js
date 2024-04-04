@@ -16,6 +16,7 @@ export function projectCardClickHandler(e, appData) {
     const { projectCache, projectMap } = appData;
     if (e.target.matches(".project>h3")) {
         renderItems(appData, e.target.parentElement.id);
+        saveData(appData, e.target.parentElement.id);
     } else if (e.target.matches(".project-actions>button")) {
         projectCache.removeObjFromList(e.currentTarget.id);
         projectMap.removeProjectFromMap(e.currentTarget.id);
@@ -94,7 +95,7 @@ export function todoCardDblClickHandler(e) {
     }
 }
 
-function saveData(appData) {
-    const {itemCache, projectCache, projectMap} = appData;
-    saveDataToLocalStorage(itemCache.getCache(), projectCache.getCache(), projectMap.getProjects())
+function saveData(appData, currentLoadedProject = null) {
+    const { itemCache, projectCache, projectMap } = appData;
+    saveDataToLocalStorage(itemCache.getCache(), projectCache.getCache(), projectMap.getProjects(), currentLoadedProject)
 }

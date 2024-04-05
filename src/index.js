@@ -1,5 +1,5 @@
 import './style.css';
-import { mainContainer, sidebarContainer } from './modules/objects/view/containers.js';
+import { mainContainer, sidebarContainer, toolbar } from './modules/objects/view/html-elements.js';
 import { load } from './modules/objects/controller/todo.js';
 import { Item } from './modules/objects/model/item.js';
 import { Project } from './modules/objects/model/project.js';
@@ -12,15 +12,24 @@ const projectMap = createProjectMap();
 
 const defaultId = "default";
 let currentLoadedProject = defaultId;
+let renderCompleted = false;
 let defProject = new Project("General", defaultId);
 projectCache.addObjToList(defProject);
 
-const existingData = loadDataFromLocalStorage(itemCache.getCache(), projectCache.getCache(), projectMap.getProjects());
+const existingData = loadDataFromLocalStorage(itemCache.getCache(), projectCache.getCache(), projectMap.getProjects(), defaultId);
 if (existingData) {
     itemCache.setCache(existingData.items);
     projectCache.setCache(existingData.projects);
     projectMap.loadProjectMap(existingData.projectMap);
     currentLoadedProject = existingData.currentLoadedProject;
+    renderCompleted = existingData.renderCompleted;
 }
 
-load(mainContainer, sidebarContainer, projectCache, itemCache, projectMap, currentLoadedProject);
+load(mainContainer, 
+    sidebarContainer, 
+    toolbar, 
+    projectCache, 
+    itemCache, 
+    projectMap, 
+    currentLoadedProject, 
+    renderCompleted);

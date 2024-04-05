@@ -26,21 +26,20 @@ export function renderItemCard(item, appData, isNewItem = false) {
     todoCard.addEventListener('focusout', (e) => focusOutHandler(e, appData));
 }
 
-export function renderProjectCard(project,
-    appData,
+export function renderProjectCard(projectId, appData,
     isNewItem = false) {
     const { projectContainer } = appData;
-    let projectCard = createProjectCard(project, isNewItem, projectContainer);
+    let projectCard = createProjectCard(projectId, isNewItem, projectContainer);
     projectCard.addEventListener('click', (e) => { projectCardClickHandler(e, appData) });
     projectCard.addEventListener('dblclick', projectCardDblClickHandler);
     projectCard.addEventListener('keyup', (e) => focusOutHandler(e, appData));
     projectCard.addEventListener('focusout', (e) => focusOutHandler(e, appData));
 }
 
-export function renderAddCardDiv(appData, projectId = null) {
-    const { itemContainer, projectContainer } = appData;
-    const container = projectId ? itemContainer : projectContainer;
-    const distinguisher = projectId ? "item" : "project";
-    let addCardDiv = createAddNewCard(container, distinguisher, projectId);
+export function renderAddCardDiv(appData, isItem = false) {
+    const { itemContainer, projectContainer, currentLoadedProject } = appData;
+    const container = isItem ? itemContainer : projectContainer;
+    const distinguisher = isItem ? "item" : "project";
+    let addCardDiv = createAddNewCard(container, distinguisher, currentLoadedProject);
     addCardDiv.addEventListener('click', (e) => addCardHandler(e, appData));
 };

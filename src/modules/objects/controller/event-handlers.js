@@ -15,7 +15,8 @@ export function projectCardClickHandler(e, appData) {
     e.stopPropagation;
     const { projectCache, projectMap } = appData;
     if (e.target.matches(".project>h3")) {
-        renderItems(appData, e.target.parentElement.id);
+        appData.currentLoadedProject = e.target.parentElement.id;
+        renderItems(appData);
         saveData(appData, e.target.parentElement.id);
     } else if (e.target.matches(".project-actions>button")) {
         projectCache.removeObjFromList(e.currentTarget.id);
@@ -36,7 +37,7 @@ export function addCardHandler(e, appData) {
 
         e.target.remove();
         renderItemCard(newItem, appData, true);
-        renderAddCardDiv(appData, projectId);
+        renderAddCardDiv(appData, true);
     } else if (e.target.matches(".add-card-project")) {
         let newProject = new Project("");
         projectCache.addObjToList(newProject);
@@ -79,8 +80,9 @@ export function todoCardClickHandler(e, appData) {
         itemCache.removeObjFromList(e.currentTarget.id);
         removeElem(e.currentTarget);
         saveData(appData);
-    } else if (e.target.matches("input[type='checkbox'].todo-complete")) {
+    } else if (e.target.matcrenderItemshes("input[type='checkbox'].todo-complete")) {
         itemCache.setPropValue(e.currentTarget.id, "isCompleted", e.target.checked)
+        saveData(appData);
     }
 
 }
@@ -95,7 +97,17 @@ export function todoCardDblClickHandler(e) {
     }
 }
 
-function saveData(appData, currentLoadedProject = null) {
-    const { itemCache, projectCache, projectMap } = appData;
-    saveDataToLocalStorage(itemCache.getCache(), projectCache.getCache(), projectMap.getProjects(), currentLoadedProject)
+export function toolBarClickHandler(e, appData) {
+    e.stopPropagation;
+    if (e.target.matches("#show-completed")) {
+        console.log(e.target.checked)
+        appData.renderCompleted = e.target.checked;
+        renderItems(appData);
+        saveData(appData);
+    }
+}
+
+function saveData(appData) {
+    const { itemCache, projectCache, projectMap, currentLoadedProject, renderCompleted } = appData;
+    saveDataToLocalStorage(itemCache.getCache(), projectCache.getCache(), projectMap.getProjects(), currentLoadedProject, renderCompleted)
 }

@@ -1,10 +1,11 @@
 import { resetElement } from "../view/elements";
 import { renderAddCardDiv, renderProjectCard, renderItemCard } from "./cards";
+import { toolBarClickHandler } from "./event-handlers";
 
-export function renderItems(appData, projectId = "default") {
-    const { itemContainer, projectMap, itemCache } = appData;
+export function renderItems(appData) {
+    const { itemContainer, projectMap, itemCache, renderCompleted, currentLoadedProject } = appData;
     resetElement(itemContainer);
-    let project = projectMap.getProject(projectId);
+    let project = projectMap.getProject(currentLoadedProject);
     if (!project) {
         project = projectMap.getProject("default");
     }
@@ -13,12 +14,16 @@ export function renderItems(appData, projectId = "default") {
         let item = itemCache.getObj(itemId);
 
         if (!item) {
-            projectMap.removeItemFromList(projectId, i);
+            projectMap.removeItemFromList(currentLoadedProject, i);
+            continue;
+        }
+
+        if (!renderCompleted && item.isCompleted) {
             continue;
         }
         renderItemCard(item, appData);
     }
-    renderAddCardDiv(appData, projectId);
+    renderAddCardDiv(appData, true);
 }
 
 function renderProjects(appData) {
@@ -30,8 +35,31 @@ function renderProjects(appData) {
     renderAddCardDiv(appData);
 }
 
-export function load(itemContainer, projectContainer, projectCache, itemCache, projectMap, currentLoadedProject) {
-    const appData = { itemContainer, projectContainer, projectCache, itemCache, projectMap }
+function switchCheckbox(checkbox, value) {
+    checkbox.checked = value;
+}
+
+export function load(itemContainer,
+    projectContainer,
+    toolbar,
+    projectCache,
+    itemCache,
+    projectMap,
+    currentLoadedProject,
+    renderCompleted
+) {
+
+    const appData = {
+        itemContainer,
+        projectContainer,
+        projectCache,
+        itemCache,
+        projectMap,
+        renderCompleted,
+        currentLoadedProject
+    }
     renderItems(appData, currentLoadedProject);
     renderProjects(appData);
+    switchCheckbox(toolbar.querySelector("#show-completed"), renderCompleted);
+    toolbar.addEventListener('click', e => toolBarClickHandler(e, appData));
 }

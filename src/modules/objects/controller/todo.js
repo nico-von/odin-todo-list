@@ -1,5 +1,5 @@
 import { resetElement } from "../view/elements";
-import { renderAddCardDiv, renderProjectCard, renderItemCard } from "./cards";
+import { renderAddCardDiv, renderProjectCard, renderItemCard, addSelected } from "./cards";
 import { toolBarClickHandler } from "./event-handlers";
 
 export function renderItems(appData) {
@@ -27,7 +27,7 @@ export function renderItems(appData) {
 }
 
 function renderProjects(appData) {
-    const { projectCache } = appData;
+    const { projectCache} = appData;
     let projects = projectCache.getObjs();
     for (let i = 0; i < projects.length; i++) {
         renderProjectCard(projects[i], appData, false);

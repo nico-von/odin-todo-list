@@ -11,7 +11,7 @@ export function createProjectCard(p, isNewItem, container) {
 
     if (!p.isDefault) {
         let projectActions = createElem("div", ["project-actions"], project);
-        let deleteProject = createElem("button", [], projectActions);
+        let deleteProject = createElem("button", ["delete-button", "delete-symbol"], projectActions);
         deleteProject.textContent = "Delete";
     }
     return project;

@@ -1,5 +1,4 @@
 export function saveDataToLocalStorage(items, projects, projectMap, currentLoadedProject, renderCompleted) {
-    console.log(renderCompleted)
     localStorage.setItem("items", JSON.stringify(items));
     localStorage.setItem("projects", JSON.stringify(projects));
     localStorage.setItem("projectMap", JSON.stringify(projectMap));

@@ -1,7 +1,7 @@
 import { Item } from "../model/item";
 import { Project } from "../model/project";
 import { commitElemText, editText, editTextNumeric, removeElem } from "../view/elements";
-import { renderAddCardDiv, renderItemCard, renderProjectCard } from "./cards";
+import { addSelected, removeSelected, renderAddCardDiv, renderItemCard, renderProjectCard } from "./cards";
 import { renderItems } from "./todo";
 import { saveDataToLocalStorage } from "./data";
 
@@ -17,6 +17,8 @@ export function projectCardClickHandler(e, appData) {
     if (e.target.matches(".project>h3")) {
         appData.currentLoadedProject = e.target.parentElement.id;
         renderItems(appData);
+        removeSelected(appData);
+        addSelected(e.target.parentElement);
         saveData(appData, e.target.parentElement.id);
     } else if (e.target.matches(".project-actions>button")) {
         projectCache.removeObjFromList(e.currentTarget.id);
@@ -80,8 +82,9 @@ export function todoCardClickHandler(e, appData) {
         itemCache.removeObjFromList(e.currentTarget.id);
         removeElem(e.currentTarget);
         saveData(appData);
-    } else if (e.target.matcrenderItemshes("input[type='checkbox'].todo-complete")) {
+    } else if (e.target.matches("input[type='checkbox'].complete-checkbox")) {
         itemCache.setPropValue(e.currentTarget.id, "isCompleted", e.target.checked)
+        renderItems(appData);
         saveData(appData);
     }
 

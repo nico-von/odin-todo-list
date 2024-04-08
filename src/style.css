@@ -2,29 +2,36 @@
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
     font-weight: 400;
-    font-style: normal; 
+    font-style: normal;
 }
 
 body {
     display: grid;
-    grid-template-rows: 1fr 5fr 1fr;
+    grid-template-columns: 1fr 9fr 1fr;
+    grid-template-rows: 1fr 10fr 1fr;
     min-height: 100vh;
     margin: 0;
+    background-color: #EEEEEE;
 }
 
 header {
+    background-color: #333333;
+    color: white;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    grid-row: 1/ span 1;
-    padding: 1rem;
+    justify-content: flex-start;
+    grid-row: 1 / span 1;
+    grid-column: 1 / span 3;
+    padding: 0 1rem;
 }
 
-nav {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    margin-left: auto;
+.project-title {
+    padding: 0 1rem;
+}
+
+.logo {
+    font-size: 2rem;
+    font-weight: bold;
 }
 
 footer {
@@ -32,14 +39,24 @@ footer {
     align-items: center;
     justify-content: center;
     grid-row: 3/ span 1;
+    grid-column: 1 / span 3;
+    background-color: #333333;
+    color: white;
 }
 
 .content {
     display: grid;
     grid-template-columns: 1fr 3fr;
-    grid-row: 2 / span 3;
 }
 
+main {
+    grid-row: 2 / span 1;
+    grid-column: 2 / span 1;
+    background-color: white;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 83vh;
+}
 .project {
     grid-column: 1 / span 1;
     grid-row: 1/ span 1;
@@ -52,6 +69,12 @@ footer {
 .content-toolbar {
     grid-column: 2 / span 1;
     grid-row: 1 / span 1;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 1rem;
+
 }
 
 #sidebar-content {
@@ -62,6 +85,7 @@ footer {
 #main-content {
     grid-column: 2 / span 1;
     grid-row: 2 / span 1;
+    display: grid;
 }
 
 .todo-card {
@@ -75,66 +99,75 @@ footer {
     margin: 0rem 1rem 1rem 1rem;
 }
 
-.todo-card div{
+.todo-card div {
     height: 3rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     border-radius: 0.25rem;
-    padding: 0px 1rem; 
+    padding: 0px 1rem;
 }
 
 .todo-card div.todo-complete {
-    flex-direction: row;
+    flex-direction: row-reverse ;
     justify-content: flex-start;
+    gap: 1rem;
     align-items: center;
 }
 
 .todo-card div:has(h3, p):hover {
-    background-color: lightgrey;
+    background-color: #BBBBBB;
 }
 
 .todo-card h3,
-.todo-card p{
+.todo-card p {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .project>h3:empty::after,
-.todo-card h3:empty::after{
+.todo-card h3:empty::after {
     content: "Untitled";
 }
 
-.project {
+#sidebar-content div {
     padding: 0rem 1rem;
-    display: flex;
-    align-items: center;
 }
 
-.project h3{
+.project {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.project h3 {
     margin-right: auto;
     width: 100%;
 }
 
 .project.selected {
-    background-color: lightgrey;
+    background-color: #888888;
+    color: #EEEEEE;
 }
 
 .add-symbol {
+    margin: 1rem;
+    cursor: pointer;
     background-image: url('./modules/objects/assets/add.svg');
     background-repeat: no-repeat;
     color: transparent;
 }
 
 .delete-symbol {
+    cursor: pointer;
     background-image: url('./modules/objects/assets/delete.svg');
     background-repeat: no-repeat;
-    background-size:contain;
+    background-size: contain;
     color: transparent;
 }
 
-.delete-button{
+.delete-button {
     width: 1.4rem;
     height: 1.4rem;
     border: none;
@@ -144,10 +177,12 @@ footer {
 input {
     height: 100%;
     border: none;
+    color: inherit;
     background-color: inherit;
 }
 
-text:focus, input:focus {
+text:focus,
+input:focus {
     outline: none;
 
 }

@@ -1,29 +1,37 @@
 import { Item } from "../model/item";
 import { Project } from "../model/project";
-import { commitElemText, editText, editTextNumeric, removeElem } from "../view/elements";
+import { commitElemText, editText, removeElem } from "../view/elements";
 import { addSelected, removeSelected, renderAddCardDiv, renderItemCard, renderProjectCard } from "./cards";
 import { renderItems } from "./todo";
 import { saveDataToLocalStorage } from "./data";
 
 export function projectCardDblClickHandler(e) {
     e.stopPropagation;
-    if (e.target.matches(".project>h3")) {
+    if (e.target.matches(".project:not(#default)>h3")) {
         editText(e.target);
     }
 }
 export function projectCardClickHandler(e, appData) {
     e.stopPropagation;
-    const { projectCache, projectMap } = appData;
+    const { itemCache, projectCache, projectMap } = appData;
     if (e.target.matches(".project>h3")) {
         appData.currentLoadedProject = e.target.parentElement.id;
         renderItems(appData);
         removeSelected(appData);
         addSelected(e.target.parentElement);
         saveData(appData, e.target.parentElement.id);
-    } else if (e.target.matches(".project-actions>button")) {
+    } else if (e.target.matches(".project-actions>.delete-button")) {
         projectCache.removeObjFromList(e.currentTarget.id);
+        for (let item of projectMap.getProject(e.currentTarget.id)){
+            itemCache.removeObjFromList(item);
+        }
         projectMap.removeProjectFromMap(e.currentTarget.id);
+        appData.currentLoadedProject = Object.keys(projectMap.getProjects()).pop();
+
         removeElem(e.currentTarget);
+        renderItems(appData);
+        removeSelected(appData);
+        addSelected(document.querySelector(`#${appData.currentLoadedProject}`));
         saveData(appData);
     }
 }
@@ -65,9 +73,7 @@ export function focusOutHandler(e, appData) {
             itemCache.setPropValue(e.currentTarget.id, "name", e.target.value);
         } else if (e.target.matches(".todo-desc input")) {
             itemCache.setPropValue(e.currentTarget.id, "description", e.target.value);
-        } else if (e.target.matches(".todo-priority input")) {
-            itemCache.setPropValue(e.currentTarget.id, "priority", parseFloat(e.target.value));
-        } else if (e.target.matches(".project input")) {
+        } else if (e.target.matches(".project:not(#default) input")) {
             projectCache.setPropValue(e.currentTarget.id, "name", e.target.value);
         }
         commitElemText(e.target);
@@ -95,15 +101,12 @@ export function todoCardDblClickHandler(e) {
     if (e.target.matches(".todo-title>h3:first-child")
         || e.target.matches(".todo-desc>p:first-child")) {
         editText(e.target);
-    } else if (e.target.matches(".todo-priority>p:first-child")) {
-        editTextNumeric(e.target);
     }
 }
 
 export function toolBarClickHandler(e, appData) {
     e.stopPropagation;
     if (e.target.matches("#show-completed")) {
-        console.log(e.target.checked)
         appData.renderCompleted = e.target.checked;
         renderItems(appData);
         saveData(appData);

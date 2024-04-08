@@ -1,7 +1,7 @@
 import { createElem, createInputElem } from "./elements";
 
 
-export function createTodoCard(name = "", description = "", isCompleted = false, priority, id, isNewItemCard, container) {
+export function createTodoCard(name = "", description = "", isCompleted = false, id, isNewItemCard, container) {
     let todoElem = createElem("div", ["todo-card"], container, id);
     let todoTitle = createElem("div", ["todo-title"], todoElem);
     let todoDesc = createElem("div", ["todo-desc"], todoElem);
@@ -14,9 +14,6 @@ export function createTodoCard(name = "", description = "", isCompleted = false,
     }
     todoDescText.textContent = description === "" ? "Description" : description;
 
-    let todoPriority = createElem("div", ["todo-priority"], todoElem);
-    let todoPriorityText = createElem("p", [], todoPriority);
-    todoPriorityText.textContent = priority;
 
     let toggleId = `toggle${id}`;
     let todoCompletedDiv = createElem("div", ["todo-complete"], todoElem);
@@ -24,11 +21,11 @@ export function createTodoCard(name = "", description = "", isCompleted = false,
     todoCompleted.setAttribute("type", "checkbox");
     if (isCompleted) todoCompleted.setAttribute("checked", "");
 
-    let todoPriorityLabel = createElem("label", [], todoCompletedDiv);
-    todoPriorityLabel.textContent = "Completed";
+    let todoComplete = createElem("label", [], todoCompletedDiv);
+    todoComplete.textContent = "Completed?";
 
     let todoElemActions = createElem("div", ["todo-actions"], todoElem);
-    todoPriorityLabel.htmlFor = toggleId;
+    todoComplete.htmlFor = toggleId;
 
     let todoDelButton = createElem("button", ["todo-del-btn", "delete-button", "delete-symbol"], todoElemActions);
     todoDelButton.textContent = "Delete";

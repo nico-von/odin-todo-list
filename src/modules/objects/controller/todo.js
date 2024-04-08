@@ -9,6 +9,7 @@ export function renderItems(appData) {
     if (!project) {
         project = projectMap.getProject("default");
     }
+
     for (let i = 0; i < project.length; i++) {
         let itemId = project[i];
         let item = itemCache.getObj(itemId);
@@ -21,8 +22,11 @@ export function renderItems(appData) {
         if (!renderCompleted && item.isCompleted) {
             continue;
         }
-        renderItemCard(item, appData);
+
+        renderItemCard(item, appData);        
     }
+
+    
     renderAddCardDiv(appData, true);
 }
 

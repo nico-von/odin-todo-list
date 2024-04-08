@@ -40,17 +40,6 @@ export function editText(elem) {
 
 }
 
-export function editTextNumeric(elem) {
-    let elemText = elem.textContent;
-    elem.textContent = "";
-
-    let titleInput = createElem("input", [], elem);
-    titleInput.setAttribute("type", "number");
-    titleInput.setAttribute("value", elemText);
-    titleInput.setAttribute("min", "0");
-    titleInput.focus();
-}
-
 export function removeElem(elem) {
     elem.remove();
 }

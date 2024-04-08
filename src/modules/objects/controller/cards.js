@@ -11,12 +11,11 @@ import {
 } from "./event-handlers";
 
 export function renderItemCard(item, appData, isNewItem = false) {
-    const { name, description, isCompleted, priority, id } = item;
+    const { name, description, isCompleted, id } = item;
     const { itemContainer } = appData;
     const todoCard = createTodoCard(name,
         description,
         isCompleted,
-        priority,
         id,
         isNewItem,
         itemContainer)
